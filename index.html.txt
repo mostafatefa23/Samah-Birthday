@@ -1,0 +1,292 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>عيد ميلاد سعيد يا سماح ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+background:#0b0b0b;
+color:white;
+font-family:Tahoma;
+text-align:center;
+padding:20px;
+overflow-x:hidden;
+}
+
+button{
+padding:15px 30px;
+border:none;
+border-radius:12px;
+background:#ff4fd8;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+.box{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:15px;
+width:320px;
+margin:auto;
+margin-top:120px;
+}
+
+input{
+padding:10px;
+border-radius:10px;
+border:none;
+width:200px;
+}
+
+.hidden{
+display:none;
+}
+
+/* قلوب */
+
+.heart{
+position:fixed;
+color:red;
+font-size:20px;
+animation:float 8s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* الصور */
+
+.slideshow{
+max-width:250px;
+margin:auto;
+}
+
+.slideshow img{
+width:100%;
+border-radius:15px;
+display:none;
+}
+
+/* الرسالة */
+
+.message{
+max-width:600px;
+margin:auto;
+line-height:2;
+font-size:18px;
+margin-top:30px;
+}
+
+/* الكيكة */
+
+.cake{
+font-size:80px;
+margin-top:40px;
+animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="start">
+
+<h1>🎁 عندي مفاجأة ليكي 🎁</h1>
+
+<button onclick="startSite()">ابدئي</button>
+
+</div>
+
+
+<div class="box hidden" id="login">
+
+<p>اكتبي التاريخ المميز بيننا ❤️</p>
+
+<input type="text" id="pass" placeholder="4/1/2025">
+
+<br><br>
+
+<button onclick="check()">فتح</button>
+
+</div>
+
+
+<div id="content" class="hidden">
+
+<h1>🎉 عيد ميلاد سعيد يا سماح 🎉</h1>
+
+<audio autoplay controls>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<h2>ذكرياتنا 📸</h2>
+
+<div class="slideshow">
+
+<img src="1.jpg">
+<img src="2.jpg">
+<img src="3.jpg">
+<img src="4.jpg">
+<img src="5.jpg">
+
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="cake">🎂</div>
+
+</div>
+
+<script>
+
+function startSite(){
+
+document.getElementById("start").style.display="none";
+document.getElementById("login").classList.remove("hidden");
+
+}
+
+function check(){
+
+var password="4/1/2025";
+var input=document.getElementById("pass").value;
+
+if(input==password){
+
+document.getElementById("login").style.display="none";
+document.getElementById("content").classList.remove("hidden");
+
+startConfetti();
+startHearts();
+startSlideshow();
+typeMessage();
+
+}else{
+
+alert("التاريخ غلط ❤️ حاول تاني");
+
+}
+
+}
+
+/* احتفال */
+
+function startConfetti(){
+
+confetti({
+particleCount:300,
+spread:120
+});
+
+}
+
+/* قلوب */
+
+function startHearts(){
+
+setInterval(()=>{
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),8000);
+
+},500);
+
+}
+
+/* سلايد شو */
+
+function startSlideshow(){
+
+let slides=document.querySelectorAll(".slideshow img");
+
+let index=0;
+
+slides[0].style.display="block";
+
+setInterval(()=>{
+
+slides[index].style.display="none";
+
+index=(index+1)%slides.length;
+
+slides[index].style.display="block";
+
+},3000);
+
+}
+
+/* كتابة الرسالة */
+
+function typeMessage(){
+
+let text=`عيد ميلاد سعيد يا سماح ❤️
+
+النهارده مش يوم عادي...
+ده اليوم اللي اتولدت فيه أجمل إنسانة في حياتي.
+
+من يوم ما دخلتي حياتي كل حاجة بقت أحلى.
+
+بقيتي راحتي وسعادتي وأجمل حاجة حصلتلي.
+
+بتمنى السنة دي تكون مليانة نجاح وفرح وتحقيق لكل أحلامك.
+
+كل سنة وانتي أقرب حد لقلبي ❤️
+
+— مصطفى`;
+
+let i=0;
+
+let speed=60;
+
+function typing(){
+
+if(i<text.length){
+
+document.getElementById("message").innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(typing,speed);
+
+}
+
+}
+
+typing();
+
+}
+
+</script>
+
+</body>
+</html>
+```
