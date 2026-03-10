@@ -69,15 +69,24 @@ animation:float 8s linear infinite;
 /* الصور */
 
 .slideshow{
-max-width:250px;
+position:relative;
+width:260px;
 margin:auto;
 }
 
 .slideshow img{
-width:260px;
+position:absolute;
+width:100%;
 border-radius:20px;
-box-shadow:0 0 20px rgba(255,0,150,0.6);
-margin-top:20px;
+opacity:0;
+transform:scale(1.05);
+transition:opacity 1.5s ease, transform 3s ease;
+box-shadow:0 0 25px rgba(255,0,150,0.5);
+}
+
+.slideshow img.active{
+opacity:1;
+transform:scale(1);
 }
 
 /* الرسالة */
@@ -137,7 +146,7 @@ animation:bounce 2s infinite;
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<h2>ذكرياتنا 📸</h2>
+<h2>اجمل ذكرياتنا مع بعض 📸</h2>
 
 <div class="slideshow">
 
@@ -181,7 +190,7 @@ typeMessage();
 
 }else{
 
-alert("التاريخ غلط ❤️ حاول تاني");
+alert("التاريخ غلط ❤️ عيب عليكي");
 
 }
 
@@ -227,21 +236,20 @@ setTimeout(()=>heart.remove(),8000);
 function startSlideshow(){
 
 let slides=document.querySelectorAll(".slideshow img");
-
 let index=0;
 
-slides[0].style.display="block";
+slides[index].classList.add("active");
 
 setInterval(()=>{
 
-slides[index].style.display="none";
+slides[index].classList.remove("active");
 
 index=(index+1)%slides.length;
 
-slides[index].style.display="block";
+slides[index].classList.add("active");
 
-},3000);
-
+},4000);
+  
 }
 
 /* كتابة الرسالة */
@@ -290,6 +298,7 @@ typing();
 </body>
 </html>
 ```
+
 
 
 
