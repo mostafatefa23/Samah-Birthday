@@ -147,8 +147,8 @@ animation:bounce 2s infinite;
 
 <h1>🎉 عيد ميلاد سعيد يا سموحتيي 🎉</h1>
 
-<audio id="music" controls>
-<source src="song.mp3" type="audio/mpeg">
+<audio id="music">
+  <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <h2>اجمل ذكرياتنا مع بعض 📸</h2>
@@ -187,6 +187,8 @@ if(input==password){
 
 document.getElementById("login").style.display="none";
 document.getElementById("content").classList.remove("hidden");
+document.getElementById("music").play();
+  
 
 startConfetti();
 startHearts();
@@ -303,6 +305,7 @@ typing();
 </body>
 </html>
 ```
+
 
 
 
