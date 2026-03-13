@@ -12,6 +12,20 @@
 
 <style>
 
+  .balloon{
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 55px;
+  border-radius: 50%;
+  opacity: .9;
+  animation: rise 10s linear infinite;
+}
+
+@keyframes rise{
+  0%{ transform: translateY(0) scale(1); }
+  100%{ transform: translateY(-120vh) scale(1.1); }
+}
 body{
 background: linear-gradient(135deg,#000000,#1a001f);
 color:white;
@@ -171,12 +185,47 @@ animation:bounce 2s infinite;
 
 <script>
 
+  function fireWorks(){
+
+  setInterval(()=>{
+
+    confetti({
+      particleCount: 120,
+      spread: 100,
+      origin:{ y:0.6 }
+    });
+
+  },2000);
+
+}
+  
+  function startBalloons(){
+
+  setInterval(()=>{
+
+    let b = document.createElement("div");
+    b.className = "balloon";
+
+    b.style.left = Math.random()*100 + "%";
+    b.style.background = "hsl(" + Math.random()*360 + ",70%,60%)";
+
+    document.body.appendChild(b);
+
+    setTimeout(()=> b.remove(), 10000);
+
+  },300);
+
+}
+  
 function startSite(){
 
 document.getElementById("start").style.display="none";
 document.getElementById("login").classList.remove("hidden");
 
-}
+}startBalloons();
+fireWorks();
+document.getElementById("music").play();
+  
 
 function check(){
 
@@ -305,6 +354,7 @@ typing();
 </body>
 </html>
 ```
+
 
 
 
