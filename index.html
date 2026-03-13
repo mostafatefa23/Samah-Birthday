@@ -14,12 +14,27 @@
 <style>
 
 body{
-background: linear-gradient(135deg,#000000,#1a001f);
+background: radial-gradient(circle,#1a001f,#000000);
 color:white;
 font-family:Tajawal, sans-serif;
 text-align:center;
 padding:20px;
 overflow-x:hidden;
+}
+
+/* نجوم */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:radial-gradient(white 1px,transparent 1px);
+background-size:40px 40px;
+opacity:.2;
+pointer-events:none;
 }
 
 button{
@@ -52,14 +67,13 @@ width:200px;
 display:none;
 }
 
-/* القلوب */
+/* قلوب */
 
 .heart{
 position:fixed;
 color:#ff4fd8;
 font-size:20px;
 animation:float 8s linear infinite;
-pointer-events:none;
 }
 
 @keyframes float{
@@ -67,7 +81,7 @@ pointer-events:none;
 100%{transform:translateY(-10vh);}
 }
 
-/* البالونات */
+/* بالونات */
 
 .balloon{
 position:fixed;
@@ -77,7 +91,6 @@ height:55px;
 border-radius:50%;
 opacity:.9;
 animation:rise 10s linear infinite;
-pointer-events:none;
 }
 
 @keyframes rise{
@@ -100,7 +113,6 @@ flex-wrap:wrap;
 width:340px;
 border-radius:20px;
 box-shadow:0 0 30px rgba(255,0,150,0.6);
-transition:1s;
 }
 
 .thumbs{
@@ -122,6 +134,44 @@ opacity:1;
 transform:scale(1.1);
 }
 
+/* الحب */
+
+.love{
+margin-top:40px;
+font-size:45px;
+color:#ff4fd8;
+animation:zoom 1.5s infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.15);}
+}
+
+/* الكيكة */
+
+.cake{
+font-size:90px;
+margin-top:30px;
+animation:bounce 2s infinite;
+}
+
+.candles{
+font-size:30px;
+margin-top:-20px;
+animation:flicker 1s infinite alternate;
+}
+
+@keyframes flicker{
+from{opacity:1;}
+to{opacity:0.6;}
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+
 /* الرسالة */
 
 .message{
@@ -132,17 +182,12 @@ font-size:18px;
 margin-top:30px;
 }
 
-/* الكيكة */
+/* العداد */
 
-.cake{
-font-size:80px;
-margin-top:40px;
-animation:bounce 2s infinite;
-}
-
-@keyframes bounce{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
+.counter{
+margin-top:30px;
+font-size:22px;
+color:#ff4fd8;
 }
 
 </style>
@@ -153,7 +198,6 @@ animation:bounce 2s infinite;
 <div id="start">
 
 <h1>🎁 عندي مفاجأة ليكي 🎁</h1>
-
 <button onclick="startSite()">ابدئي</button>
 
 </div>
@@ -193,50 +237,59 @@ animation:bounce 2s infinite;
 <img src="3.jpg" onclick="changePhoto(this)">
 <img src="4.jpg" onclick="changePhoto(this)">
 <img src="5.jpg" onclick="changePhoto(this)">
+<img src="6.jpg" onclick="changePhoto(this)">
+<img src="7.jpg" onclick="changePhoto(this)">
+<img src="8.jpg" onclick="changePhoto(this)">
+<img src="9.jpg" onclick="changePhoto(this)">
+<img src="10.jpg" onclick="changePhoto(this)">
+<img src="11.jpg" onclick="changePhoto(this)">
+<img src="12.jpg" onclick="changePhoto(this)">
 
 </div>
 
 </div>
+
+<div id="loveMessage" class="love hidden">
+💖 سماح ❤️ مصطفى 💖
+</div>
+
+<div id="cakeBox" class="cake hidden">
+🎂
+<div class="candles">🕯🕯🕯</div>
+</div>
+
+<div class="counter" id="counter"></div>
 
 <div class="message" id="message"></div>
-
-<div class="cake">🎂</div>
 
 </div>
 
 <script>
 
-let images=["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg"];
+let images=["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg","11.jpg","12.jpg"];
 let current=0;
 
 function startSite(){
-
 document.getElementById("start").style.display="none";
 document.getElementById("login").classList.remove("hidden");
-
 }
 
 function check(){
 
-var password="4/1/2025";
-var input=document.getElementById("pass").value;
-
-if(input==password){
+if(document.getElementById("pass").value=="4/1/2025"){
 
 document.getElementById("login").style.display="none";
 document.getElementById("content").classList.remove("hidden");
 
 document.getElementById("music").play();
 
-startConfetti();
 startHearts();
 startBalloons();
 fireWorks();
 typeMessage();
+startCounter();
 
-}
-
-else{
+}else{
 
 alert("التاريخ غلط ❤️");
 
@@ -247,7 +300,6 @@ alert("التاريخ غلط ❤️");
 function changePhoto(img){
 
 document.getElementById("mainPhoto").src=img.src;
-
 current=images.indexOf(img.src.split("/").pop());
 
 }
@@ -257,34 +309,35 @@ function autoSlide(){
 current++;
 
 if(current>=images.length){
+
+document.getElementById("loveMessage").classList.remove("hidden");
+document.getElementById("cakeBox").classList.remove("hidden");
+
+confetti({
+particleCount:500,
+spread:200
+});
+
+setTimeout(()=>{
 current=0;
+},6000);
+
 }
 
 document.getElementById("mainPhoto").src=images[current];
 
 }
 
-setInterval(autoSlide,4000);
-
-function startConfetti(){
-
-confetti({
-particleCount:200,
-spread:120
-});
-
-}
+setInterval(autoSlide,3000);
 
 function fireWorks(){
 
 setInterval(()=>{
-
 confetti({
 particleCount:120,
 spread:100,
 origin:{y:0.6}
 });
-
 },2000);
 
 }
@@ -294,14 +347,9 @@ function startHearts(){
 setInterval(()=>{
 
 let heart=document.createElement("div");
-
 heart.className="heart";
-
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"%";
-
-heart.style.fontSize=(20+Math.random()*20)+"px";
 
 document.body.appendChild(heart);
 
@@ -316,11 +364,9 @@ function startBalloons(){
 setInterval(()=>{
 
 let b=document.createElement("div");
-
 b.className="balloon";
 
 b.style.left=Math.random()*100+"%";
-
 b.style.background="hsl("+Math.random()*360+",70%,60%)";
 
 document.body.appendChild(b);
@@ -342,8 +388,6 @@ let text=`عيد ميلاد سعيد يا سموحتي ❤️
 
 بقيتي راحتي وسعادتي وأجمل حاجة حصلتلي.
 
-بتمنى السنة دي تكون مليانة نجاح وفرح وتحقيق لكل أحلامك.
-
 كل سنة وانتي أقرب حد لقلبي ❤️
 
 — تفاتيفا`;
@@ -355,9 +399,7 @@ function typing(){
 if(i<text.length){
 
 document.getElementById("message").innerHTML+=text.charAt(i);
-
 i++;
-
 setTimeout(typing,60);
 
 }
@@ -365,6 +407,24 @@ setTimeout(typing,60);
 }
 
 typing();
+
+}
+
+function startCounter(){
+
+let startDate=new Date("2025-01-04");
+
+setInterval(()=>{
+
+let now=new Date();
+let diff=now-startDate;
+
+let days=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("counter").innerHTML=
+"بقالنا مع بعض "+days+" يوم ❤️";
+
+},1000);
 
 }
 
