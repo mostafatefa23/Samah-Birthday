@@ -12,7 +12,7 @@
 
 <style>
 
-  .balloon{
+.balloon{
   position: fixed;
   bottom: -100px;
   width: 40px;
@@ -20,6 +20,7 @@
   border-radius: 50%;
   opacity: .9;
   animation: rise 10s linear infinite;
+  pointer-events: none; /* مهم */
 }
 
 @keyframes rise{
@@ -229,8 +230,8 @@ function check(){
 var password="4/1/2025";
 var input=document.getElementById("pass").value;
 
-if(input==password){
-
+if(input == password){
+  
 document.getElementById("login").style.display="none";
 document.getElementById("content").classList.remove("hidden");
 document.getElementById("music").play();
@@ -353,6 +354,7 @@ typing();
 </body>
 </html>
 ```
+
 
 
 
